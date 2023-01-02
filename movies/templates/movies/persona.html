@@ -1,0 +1,519 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+<title>PICKA:성격테스트</title>
+{% endblock title %}
+
+{% block content %}
+  <!-- Navigation-->
+  <nav class="navbar fixed-top navbar-expand-lg" style="margin-top:10px;">
+    <div class="container-fluid">
+      <a href="{% url 'movies:nowplaying' %}">
+        <img src="/static/img/logo_picka.png" href="#page-top" style="width:200px;">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="margin-left:20px;">
+          <li class="nav-item" style="margin-left:20px;">
+            <a class="nav-link text-white opacity-75" href={% url 'movies:nowplaying' %}>NOW PLAYING</a>
+          </li>
+          <li class="nav-item" style="margin-left:20px;">
+            <a class="nav-link text-white opacity-75" href={% url 'movies:upcoming' %}>UPCOMING</a>
+          </li>
+          <li class="nav-item" style="margin-left:20px;">
+            <a class="nav-link text-white opacity-75" href={% url 'movies:loading' %}>PALETTE</a>
+          </li>
+          <li class="nav-item active" style="margin-left:20px;">
+            <a class="nav-link text-white" href={% url 'movies:persona' %}><b>PERSONA</b></a>
+          </li>
+          <li class="nav-item" style="margin-left:20px;">
+            <a class="nav-link text-white opacity-75" href={% url 'community:index' %}>COMMUNITY</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav" style="margin-right:20px;">
+          <li class="nav-item" style="margin-right:20px;">
+            <button class="nav-link btn btn-light opacity-75" style="padding-top:6px; padding-bottom:6px; padding-right:10px; padding-left:10px;">
+              <a class="text-decoration-none text-black fw-bold" href={% url 'accounts:mypage' user.username %}>MYPAGE</a>
+            </button>
+          </li>
+          <li class="nav-item">
+            <form action="{% url 'accounts:logout' %}" method="POST">
+              {% csrf_token %}
+              <input type="submit" value="로그아웃" class="btn btn-outline-light">
+            </form>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div style="background-image: linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6) ), url('/static/img/intro_image5.jpg'); height: 100%; background-position: center; background-repeat: repeat-y; background-size: cover;">
+    <div class="d-flex justify-content-center main">
+      <div class="card bg-white bg-opacity-75 mb-5" style="width: 70%; margin-top: 10%">
+        <div class="card-body d-flex-row opacity: 0;">
+          <h1 class="card-title text-center fw-bold">내 입맛에 맞는 영화 찾기</h1>
+          <hr>
+          <div>
+            <div class="mt-3">
+              <section class="col-12">
+                <div class="d-none d-lg-block">
+                  <div class="container border border-dark rounded mb-5">
+
+                    <div class="channel row text-center d-flex-row justify-content-center">
+                      <h2 id="question" class="fw-bold my-5">1. 고단한 일주일 간의 개발 이후, 꿀같은 주말을 어떻게 보내고 싶나요?
+                      </h2>
+                    </div>
+                
+                    <div id="answer-btns"class="row my-3">
+                      <hr>                   
+                      <div class="col-12 mt-3">
+                        <div class="d-grid gap-2">
+                          <input id="answerA" type="button" value="그동안 못 본 친구들과 만나 놀러다닐거야!!!" class="btn btn-lg btn-success py-4 fw-bold">
+                        </div>
+                      </div>
+                      
+                      <div class="col-12 mt-3">
+                        <div class="d-grid gap-2">
+                          <input id="answerB" type="button" value="기운이 없어... 집에서 푹 쉬면서 밀린 드라마 볼래!" class="btn btn-lg btn-success py-4 fw-bold">
+                        </div>
+                      </div>
+                    </div>
+                  </div>      
+                </div>
+              </section>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block script %}
+  <script>
+    const nowplayingMovieList = [
+    {% for nowplayingMovie in nowplaying_movies %}
+      {
+        title: "{{ nowplayingMovie.title }}",
+        release_date: "{{ nowplayingMovie.release_date }}",
+        poster_path: "{{ nowplayingMovie.poster_path }}",
+        backdrop_path: "{{ nowplayingMovie.backdrop_path }}",
+        genre_ids: "{{ nowplayingMovie.genre_ids }}",
+        vote_average: "{{ nowplayingMovie.vote_average }}",
+      },
+    {% endfor%}
+    ]
+
+    let genres = [
+    ['용감한 독수리', 10752, 'https://freesvg.org/img/Eagle9.png'],
+    ['울부짓는 까마귀', 27, 'https://cdn.pixabay.com/photo/2019/05/21/04/28/raven-4218220_1280.png'],
+    ['소름돋은 생쥐', 53, 'http://assets.stickpng.com/images/580b57fbd9996e24bc43bcb4.png'],
+    ['날렵한 호랑이', 28, 'https://i.pinimg.com/originals/1f/c3/7a/1fc37ad2003dbbccf79a13f8439dc698.png'],
+    ['꿈꾸는 용', 14,'https://cdn.pixabay.com/photo/2019/09/09/02/38/dragon-4462419_1280.png'],
+    ['황야의 야생마', 37, 'https://www.pngplay.com/wp-content/uploads/9/Horse-PNG-Photo-Image.png'],
+    ['활발한 고양이', 12, 'https://static.wixstatic.com/media/2cd43b_fb5eefb6b3d344e09dc3f047d0bd77c6~mv2.png/v1/fill/w_320,h_213,q_90/2cd43b_fb5eefb6b3d344e09dc3f047d0bd77c6~mv2.png'],
+    ['재밌는 원숭이', 35, 'https://pngimg.com/uploads/monkey/monkey_PNG18738.png'],
+    ['사랑스러운 늑대', 10749, 'https://cdn.pixabay.com/photo/2022/01/10/18/33/animal-6929020_1280.png'],
+    ['유영하는 돌고래', 878, 'https://i.pinimg.com/originals/d8/6c/ba/d86cbaf255577f46150ff5bdd517aa82.png'],
+    ['뻔뻔한 뻐꾸기', 80, 'https://www.pngkit.com/png/full/190-1904323_free-bird-images-and-paintings-birds-wildlife-yellow.png'],
+    ['수수께끼의 여우', 9648, 'https://www.picng.com/upload/fox/png_fox_2032.png'],
+    ['떠올리는 티라노', 36, 'https://static.wikia.nocookie.net/jurassicworld-evolution/images/c/cd/TrexJPthumb.png/revision/latest?cb=20200107161940'],
+    ['눈물 많은 사슴', 18, 'https://www.picng.com/upload/deer/png_deer_1100.png'],
+    ['호기심 많은 펭귄', 99, 'http://assets.stickpng.com/images/5a0591989cf05203c4b6041b.png'],
+    ['청아한 꾀꼬리', 10402, 'https://www.nicepng.com/png/full/141-1410666_baltimore-oriole-bird-png.png'],
+    ['애교많은 토끼', 16, 'https://static.wixstatic.com/media/2cd43b_14f68b5043b4474db472d90b5b4a18d7~mv2_d_2453_2870_s_4_2.png/v1/fill/w_320,h_374,q_90/2cd43b_14f68b5043b4474db472d90b5b4a18d7~mv2_d_2453_2870_s_4_2.png'],
+    ['푸근한 코끼리', 10751, 'https://www.freepnglogos.com/uploads/elephant-png/elephant-designs-deviantart-24.png'],
+    ]
+    const questionsList = [
+      '2. 오랫동안 기다린 친구와의 약속이 취소되었다...ㅠㅠ 지금 시간은 오후 1시!',
+      '3. 지인으로부터 파티에 초대를 받아 갔는데 웬걸 지인은 어디갔는지 온통 낯선사람들 뿐!!',
+      '4. 힘들게 코딩을 마치고 산책을 나섰는데 쩌어기~ 싸움이 벌어진거 같다!',
+      '5. 어두캄캄한 밤, 시골길을 홀로 걷는데, 앞에 보이는 폐건물에서 소리가 난다!',
+      '6. 친구들과 함께 술자리를 갖기로 한 날! 어디로 갈지 나에게 주어진 선택권',
+      '7. 처음가보는 나라로 여행을 갔는데 일정사이에 생긴 자유시간. 흠 어디서 시간을 보내지?',
+    ]
+    const answerAList = [
+      '"지금 시간되는 다른 친구들 없나...?" 다른 약속을 얼른 잡는다.', 
+      '안되겠어, 일행이 없는 다른 사람들에게 말을 붙여보자.',
+      '오, 뭐야!? 역시 구경 중 제일은 싸움구경이지!!!',
+      '"이게 무슨 소리지? 한 번 가보자!" 소리가 난 쪽으로 가본다.',
+      '힙합 노래가 나오고 북적거리는 펍으로 간다. "씐난다~!"',
+      '숙소 근처 공원에서 맛있는 걸 먹으면서 사람 구경을 한다.',
+    ]
+    const answerBList = [
+      '앗...! 안그래도 쉬고 싶었는데 그냥 혼자만의 시간을 보낼래!', 
+      '지인이 도대체 어디간걸까...? 여기서 음료를 마시면서 기다려야지.',
+      '"으... 폭력은 딱 질색이야." 얼른 자리를 피한다.',
+      '"으악!!!" 왔던 길로 돌아서 도망간다!',
+      '조명이 은은하고 잔잔한 재즈가 흘러나오는 칵테일바로 간다.',
+      '근처에 있는 유명 관광지를 찾아 가본다.',
+    ]
+    
+    let cntA = 0
+    let secondCntA = 0
+    let thirdCntA = 0
+    let cntAnswer = 0
+    let questionIndex = -1
+    let idxA = -1
+    let idxB = -1
+
+    let testResult = []
+    let character = ""
+
+    
+    const question = document.querySelector('#question')
+    const channel = document.querySelector(".channel")
+    const h1 = document.createElement("h1")
+    const answerBtns = document.querySelector("#answer-btns")
+    const answerA = document.querySelector('#answerA')
+    answerA.addEventListener("click", function () {
+      cntAnswer ++
+      questionIndex++
+      question.innerText = questionsList[questionIndex]
+      idxA++
+      answerA.setAttribute("value", answerAList[idxA])
+      idxB++
+      answerB.setAttribute("value", answerBList[idxA])
+
+      if (cntAnswer <= 3) {
+        cntA++
+      } else if (cntAnswer <= 5) {
+        secondCntA++
+      } else {
+        thirdCntA++
+      }
+
+      if (cntAnswer === 3) {
+        testResult.push(cntA)
+      } else if (cntAnswer === 5){
+        testResult.push(secondCntA)
+      } else if (cntAnswer === 7){
+        testResult.push(thirdCntA)
+      }
+      console.log(testResult)
+      
+      if ((cntAnswer === 7) & (testResult[0] >= 2)) {
+        if (testResult[1] === 2) {
+          if (testResult[2] === 2) {
+            character = genres[0]
+          } else if (testResult[2] === 1) {
+            character = genres[1]
+          } else if (testResult[2] === 0) {
+            character = genres[2]
+          }
+        } else if (testResult[1] === 1) {
+          if (testResult[2] === 2) {
+            character = genres[3]
+          } else if (testResult[2] === 1) {
+            character = genres[4]
+          } else if (testResult[2] === 0) {
+            character = genres[5]
+          }
+        } else if (testResult[1] === 0) {
+          if (testResult[2] === 2) {
+            character = genres[6]
+          } else if (testResult[2] === 1) {
+            character = genres[7]
+          } else if (testResult[2] === 0) {
+            character = genres[8]
+          }
+        }
+      } else if ((cntAnswer === 7) & (testResult[0] < 2)) {
+        if (testResult[1] === 2) {
+          if (testResult[2] === 2) {
+            character = genres[9]
+          } else if (testResult[2] === 1) {
+            character = genres[10]
+          } else if (testResult[2] === 0) {
+            character = genres[11]
+          }
+        } else if (testResult[1] === 1) {
+          if (testResult[2] === 2) {
+            character = genres[12]
+          } else if (testResult[2] === 1) {
+            character = genres[13]
+          } else if (testResult[2] === 0) {
+            character = genres[14]
+          }
+        } else if (testResult[1] === 0) {
+          if (testResult[2] === 2) {
+            character = genres[15]
+          } else if (testResult[2] === 1) {
+            character = genres[16]
+          } else if (testResult[2] === 0) {
+            character = genres[17]
+          }
+        }
+      }
+
+      if (cntAnswer === 7) {
+        answerBtns.remove()
+        question.remove()
+
+        h1.innerText = `당신은 '${character[0]}'입니다`
+        h1.setAttribute('class','fw-bold my-5')
+        // channel.appendChild(h1)
+
+        const animalImg = document.createElement('img')
+        animalImg.setAttribute('src', character[2])
+        animalImg.setAttribute('alt', `${character[0]}.img`)
+        animalImg.setAttribute('class', 'mt-5')
+        animalImg.style.width = '400px'
+        channel.append(animalImg, h1)
+
+        const goToMovieBtn = document.createElement('button')
+        goToMovieBtn.setAttribute('class','btn btn-success fw-bold mb-5 p-2 fw-bold')
+        goToMovieBtn.style.width = '400px'
+        goToMovieBtn.innerText = '나에게 맞는 영화보러 가기'
+        channel.appendChild(goToMovieBtn)        
+        console.log(nowplayingMovieList)
+
+        goToMovieBtn.addEventListener('click', function () {
+          goToMovieBtn.remove()
+          h1.remove()
+          animalImg.remove()
+        
+          const recommendedMovies = document.createElement('div')
+          recommendedMovies.setAttribute('class', 'row d-flex-row justify-content-center')
+          //let cntElem
+          // 여기서 무비데이터 for문으로 돌리면서 genre아이디가 character[1]과 같은 거 띄우기
+          for (const movie of nowplayingMovieList) {
+            if (recommendedMovies.getElementsByTagName('div').length < 3) {
+              console.log(recommendedMovies.getElementsByTagName('img').length)
+              if (movie.genre_ids.includes(character[1])) {
+                const recommendedElem = document.createElement('div')
+                recommendedElem.setAttribute('class', 'figure py-3 col-4')
+
+                const toNaver = document.createElement('a')
+                toNaver.setAttribute('href', `https://movie.naver.com/movie/search/result.naver?query=${movie.title}`)
+                toNaver.setAttribute('class', 'text-decoration-none text-black')
+                toNaver.setAttribute('target', '_blank')
+                
+                const poster = document.createElement('img')
+                poster.setAttribute('src', `http://image.tmdb.org/t/p/original/${ movie.poster_path }`)
+                poster.setAttribute('alt', `${movie.title}.img`)
+                poster.style.height = '450px'
+                poster.setAttribute('class', 'figure-img img-fluid rounded')
+
+                const title = document.createElement('h5')
+                title.innerText = `<${movie.title}>`
+                title.setAttribute('class', 'text-center fw-bold')
+                toNaver.append(poster, title)
+
+                const voteAverage = document.createElement('p')
+                voteAverage.innerText = `평점: ${movie.vote_average}`
+                voteAverage.setAttribute('class', 'text-center fw-bold')
+
+                const releaseDate = document.createElement('p')
+                releaseDate.innerText = `개봉일: ${movie.release_date}`
+                releaseDate.setAttribute('class', 'text-center fw-bold')
+
+                recommendedElem.append(toNaver, voteAverage, releaseDate)
+                recommendedMovies.append(recommendedElem)
+              } else {
+                continue
+              }
+            } else {
+              break
+            }
+          }
+          channel.appendChild(recommendedMovies)
+
+          if (recommendedMovies.getElementsByTagName('img').length === 0) {
+            const alert = document.createElement('h3')
+            alert.innerText = '현재 상영작 중에 해당되는 영화가 없어요...'
+            alert.setAttribute('class', 'fw-bold my-4')
+            const againBtn = document.createElement('a')
+            againBtn.setAttribute('class', 'btn btn-success fw-bold mb-5')
+            againBtn.href = "{% url 'movies:persona' %}"
+            againBtn.innerText = '테스트 다시하기'
+            againBtn.style.width = '400px'
+            channel.append(alert, againBtn)
+          } else {
+            const againBtn = document.createElement('a')
+            againBtn.setAttribute('class', 'btn btn-success fw-bold mb-5')
+            againBtn.href = "{% url 'movies:persona' %}"
+            againBtn.innerText = '테스트 다시하기'
+            againBtn.style.width = '400px'
+            channel.appendChild(againBtn)
+          }
+        })
+      }
+    })
+    
+    const answerB = document.querySelector('#answerB')
+    answerB.addEventListener("click", function () {
+      cntAnswer ++
+      questionIndex++
+      question.innerText = questionsList[questionIndex]
+      idxA++
+      answerA.setAttribute("value", answerAList[idxA])
+      idxB++
+      answerB.setAttribute("value", answerBList[idxA])
+      
+      if (cntAnswer === 3) {
+        testResult.push(cntA)
+      } else if (cntAnswer === 5){
+        testResult.push(secondCntA)
+      } else if (cntAnswer === 7){
+        testResult.push(thirdCntA)
+      }
+
+      if ((cntAnswer === 7) & (testResult[0] >= 2)) {
+        if (testResult[1] === 2) {
+          if (testResult[2] === 2) {
+            character = genres[0]
+          } else if (testResult[2] === 1) {
+            character = genres[1]
+          } else if (testResult[2] === 0) {
+            character = genres[2]
+          }
+        } else if (testResult[1] === 1) {
+          if (testResult[2] === 2) {
+            character = genres[3]
+          } else if (testResult[2] === 1) {
+            character = genres[4]
+          } else if (testResult[2] === 0) {
+            character = genres[5]
+          }
+        } else if (testResult[1] === 0) {
+          if (testResult[2] === 2) {
+            character = genres[6]
+          } else if (testResult[2] === 1) {
+            character = genres[7]
+          } else if (testResult[2] === 0) {
+            character = genres[8]
+          }
+        }
+      } else if ((cntAnswer === 7) & (testResult[0] < 2)) {
+        if (testResult[1] === 2) {
+          if (testResult[2] === 2) {
+            character = genres[9]
+          } else if (testResult[2] === 1) {
+            character = genres[10]
+          } else if (testResult[2] === 0) {
+            character = genres[11]
+          }
+        } else if (testResult[1] === 1) {
+          if (testResult[2] === 2) {
+            character = genres[12]
+          } else if (testResult[2] === 1) {
+            character = genres[13]
+          } else if (testResult[2] === 0) {
+            character = genres[14]
+          }
+        } else if (testResult[1] === 0) {
+          if (testResult[2] === 2) {
+            character = genres[15]
+          } else if (testResult[2] === 1) {
+            character = genres[16]
+          } else if (testResult[2] === 0) {
+            character = genres[17]
+          }
+        }
+      }
+
+      if (cntAnswer === 7) {
+        answerBtns.remove()
+        question.remove()
+
+        h1.innerText = `당신은 '${character[0]}'입니다`
+        h1.setAttribute('class','fw-bold my-5')
+        //channel.appendChild(h1)
+
+        const animalImg = document.createElement('img')
+        animalImg.setAttribute('src', character[2])
+        animalImg.setAttribute('alt', `${character[0]}.img`)
+        animalImg.setAttribute('class', 'mt-5')
+        animalImg.style.width = '400px'
+        channel.append(animalImg, h1)
+
+        const goToMovieBtn = document.createElement('button')
+        goToMovieBtn.setAttribute('class','btn btn-success fw-bold mb-5 p-2 fw-bold')
+        goToMovieBtn.style.width = '400px'
+        goToMovieBtn.innerText = '나에게 맞는 영화보러 가기'
+        channel.appendChild(goToMovieBtn)        
+        console.log(nowplayingMovieList)
+
+        goToMovieBtn.addEventListener('click', function () {
+          goToMovieBtn.remove()
+          h1.remove()
+          animalImg.remove()
+        
+          const recommendedMovies = document.createElement('div')
+          recommendedMovies.setAttribute('class', 'row d-flex-row justify-content-center')
+          //let cntElem
+          // 여기서 무비데이터 for문으로 돌리면서 genre아이디가 character[1]과 같은 거 띄우기
+          for (const movie of nowplayingMovieList) {
+            if (recommendedMovies.getElementsByTagName('div').length < 3) {
+              console.log(recommendedMovies.getElementsByTagName('img').length)
+              if (movie.genre_ids.includes(character[1])) {
+                const recommendedElem = document.createElement('div')
+                recommendedElem.setAttribute('class', 'figure py-3 col-4')
+                
+                const poster = document.createElement('img')
+                poster.setAttribute('src', `http://image.tmdb.org/t/p/original/${ movie.poster_path }`)
+                poster.setAttribute('alt', `${movie.title}.img`)
+                poster.style.height = '450px'
+                poster.setAttribute('class', 'figure-img img-fluid rounded')
+
+                const title = document.createElement('h5') 
+                title.innerText = `<${movie.title}>`
+                title.setAttribute('class', 'text-center fw-bold')
+
+                const voteAverage = document.createElement('p')
+                voteAverage.innerText = `평점: ${movie.vote_average}`
+                voteAverage.setAttribute('class', 'text-center fw-bold')
+
+                const releaseDate = document.createElement('p')
+                releaseDate.innerText = `개봉일: ${movie.release_date}`
+                releaseDate.setAttribute('class', 'text-center fw-bold')
+
+                recommendedElem.append(poster, title, voteAverage, releaseDate)
+                recommendedMovies.append(recommendedElem)
+              } else {
+                continue
+              }
+            } else {
+              break
+            }            console.log(recommendedMovies.getElementsByTagName('img').length)
+          }
+          channel.appendChild(recommendedMovies)
+
+          if (recommendedMovies.getElementsByTagName('img').length === 0) {
+            const alert = document.createElement('h3')
+            alert.innerText = '현재 상영작 중에 해당되는 영화가 없어요...'
+            alert.setAttribute('class', 'fw-bold my-4')
+            const againBtn = document.createElement('a')
+            againBtn.setAttribute('class', 'btn btn-success fw-bold mb-5')
+            againBtn.href = "{% url 'movies:persona' %}"
+            againBtn.innerText = '테스트 다시하기'
+            againBtn.style.width = '400px'
+            channel.append(alert, againBtn)
+          } else {
+            const againBtn = document.createElement('a')
+            againBtn.setAttribute('class', 'btn btn-success fw-bold mb-5')
+            againBtn.href = "{% url 'movies:persona' %}"
+            againBtn.innerText = '테스트 다시하기'
+            againBtn.style.width = '400px'
+            channel.appendChild(againBtn)
+          }
+        })
+      }
+    })
+  </script>
+{% endblock script %}
+
+{% block style %}
+<style>
+  body, html {
+    background-color: black;
+    width: 100%;
+    height: 100%;
+    margin:0px;
+  }
+</style>
+{% endblock style %}

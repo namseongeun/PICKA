@@ -1,0 +1,662 @@
+[
+{
+    "model": "movies.palettemovie",
+    "pk": 1,
+    "fields": {
+        "title": "쇼생크 탈출",
+        "R": "92.88049139134489",
+        "G": "71.6375241197456",
+        "B": "54.71364386536378",
+        "path": "/oAt6OtpwYCdJI76AVtVKW1eorYx.jpg"
+    }
+},
+{
+    "model": "movies.palettemovie",
+    "pk": 2,
+    "fields": {
+        "title": "용감한 자가 신부를 데려가리",
+        "R": "194.8103863898503",
+        "G": "161.3959573241063",
+        "B": "44.518824170190996",
+        "path": "/2CAL2433ZeIihfX1Hb2139CX0pW.jpg"
+    }
+},
+{
+    "model": "movies.palettemovie",
+    "pk": 3,
+    "fields": {
+        "title": "대부",
+        "R": "50.35775435264323",
+        "G": "43.37179107312449",
+        "B": "41.65432415321305",
+        "path": "/cOwVs8eYA4G9ZQs7hIRSoiZr46Q.jpg"
+    }
+},
+{
+    "model": "movies.palettemovie",
+    "pk": 4,
+    "fields": {
+        "title": "쉰들러 리스트",
+        "R": "165.469851074189",
+        "G": "163.03435978167514",
+        "B": "159.5918505817434",
+        "path": "/oyyUcGwLX7LTFS1pQbLrQpyzIyt.jpg"
+    }
+},
+{
+    "model": "movies.palettemovie",
+    "pk": 5,
+    "fields": {
+        "title": "대부 2",
+        "R": "24.210414688192476",
+        "G": "18.908883190883184",
+        "B": "14.686947768281103",
+        "path": "/cj9UsJEN5bNf6ZoF1BbKjKN81hc.jpg"
+    }
+},
+{
+    "model": "movies.palettemovie",
+    "pk": 6,
+    "fields": {
+        "title": "Cosas imposibles",
+        "R": "98.82837834821423",
+        "G": "67.6854994419644",
+        "B": "79.44823381696423",
+        "path": "/eaf7GQj0ieOwm08rrvjJQNbN0kN.jpg"
+    }
+},
+{
+    "model": "movies.palettemovie",
+    "pk": 7,
+    "fields": {
+        "title": "동급생",
+        "R": "216.89320188943313",
+        "G": "219.2496273617921",
+        "B": "204.80854496151167",
+        "path": "/jNJ9shLhjRavjrCGRnoTmYB18d2.jpg"
+    }
+},
+{
+    "model": "movies.palettemovie",
+    "pk": 8,
+    "fields": {
+        "title": "센과 치히로의 행방불명",
+        "R": "115.4139141525362",
+        "G": "94.63801677310433",
+        "B": "90.36633542538372",
+        "path": "/u1L4qxIu5sC2P082uMHYt7Ifvnj.jpg"
+    }
+},
+{
+    "model": "movies.palettemovie",
+    "pk": 9,
+    "fields": {
+        "title": "너의 이름은.",
+        "R": "77.60069894736833",
+        "G": "146.73429982456122",
+        "B": "180.43112649122807",
+        "path": "/wx1Dxr4UyvN18SyC5GsVWWWtYja.jpg"
+    }
+},
+{
+    "model": "movies.palettemovie",
+    "pk": 10,
+    "fields": {
+        "title": "가브리엘의 지옥",
+        "R": "38.32998888888885",
+        "G": "22.121187037037032",
+        "B": "15.049716666666663",
+        "path": "/oyG9TL7FcRP4EZ9Vid6uKzwdndz.jpg"
+    }
+},
+{
+    "model": "movies.palettemovie",
+    "pk": 11,
+    "fields": {
+        "title": "가브리엘의 지옥 파트 2",
+        "R": "40.63233703703702",
+        "G": "27.88563518518519",
+        "B": "21.21411851851851",
+        "path": "/8Rxutea68d940kg44Box5gFmKcF.jpg"
+    }
+},
+{
+    "model": "movies.palettemovie",
+    "pk": 12,
+    "fields": {
+        "title": "에브리씽 에브리웨어 올 앳 원스",
+        "R": "134.34648483333356",
+        "G": "99.8368030000004",
+        "B": "97.3000171666665",
+        "path": "/w3LxiVYdWWRvEVdn5RYq6jIqkb1.jpg"
+    }
+},
+{
+    "model": "movies.palettemovie",
+    "pk": 13,
+    "fields": {
+        "title": "기생충",
+        "R": "104.72343883333335",
+        "G": "134.5924261666666",
+        "B": "121.31106533333357",
+        "path": "/jjHccoFjbqlfr4VGLVLT7yek0Xn.jpg"
+    }
+},
+{
+    "model": "movies.palettemovie",
+    "pk": 14,
+    "fields": {
+        "title": "12명의 성난 사람들",
+        "R": "200.20281561361472",
+        "G": "186.7763710087443",
+        "B": "71.77430498009818",
+        "path": "/wh0f80G6GZvYBNiYmvqFngt3IYq.jpg"
+    }
+},
+{
+    "model": "movies.palettemovie",
+    "pk": 15,
+    "fields": {
+        "title": "그린 마일",
+        "R": "77.6037193333332",
+        "G": "64.83958566666651",
+        "B": "65.87099633333332",
+        "path": "/yuSpRhrTIJa5JN8oESrfD2bndp1.jpg"
+    }
+},
+{
+    "model": "movies.palettemovie",
+    "pk": 16,
+    "fields": {
+        "title": "다크 나이트",
+        "R": "46.411554329568325",
+        "G": "69.2290871502706",
+        "B": "80.99216630157473",
+        "path": "/f6dNinWX8rBM79JXKcShkfSh2oA.jpg"
+    }
+},
+{
+    "model": "movies.palettemovie",
+    "pk": 17,
+    "fields": {
+        "title": "Gabriel's Inferno: Part III",
+        "R": "65.44656133333335",
+        "G": "44.24926400000008",
+        "B": "43.00859933333332",
+        "path": "/uqmTxOP3gNl5MWRt1wlrUnzTphM.jpg"
+    }
+},
+{
+    "model": "movies.palettemovie",
+    "pk": 18,
+    "fields": {
+        "title": "극장판 바이올렛 에버가든",
+        "R": "130.87763664766584",
+        "G": "148.4522097970021",
+        "B": "176.58724647018065",
+        "path": "/mBUy2lCwk6fpByQ7GBFKRApKEHb.jpg"
+    }
+},
+{
+    "model": "movies.palettemovie",
+    "pk": 19,
+    "fields": {
+        "title": "펄프 픽션",
+        "R": "112.6443164048866",
+        "G": "80.51328621291447",
+        "B": "42.64353315881325",
+        "path": "/6lXRHGoEbnnBUKsuqpL9JxD4DzT.jpg"
+    }
+},
+{
+    "model": "movies.palettemovie",
+    "pk": 20,
+    "fields": {
+        "title": "반지의 제왕: 왕의 귀환",
+        "R": "99.0857618994122",
+        "G": "83.07734943282644",
+        "B": "53.53814445674899",
+        "path": "/tAXXuEAKLk2mOEIJzwajJQEnVZu.jpg"
+    }
+},
+{
+    "model": "movies.palettemovie",
+    "pk": 21,
+    "fields": {
+        "title": "석양에 돌아오다",
+        "R": "101.97137712139904",
+        "G": "94.27441554398844",
+        "B": "86.6794988237984",
+        "path": "/sOTQkPoEZd7ImsZBuXfu4BqZ6JS.jpg"
+    }
+},
+{
+    "model": "movies.palettemovie",
+    "pk": 22,
+    "fields": {
+        "title": "유어 아이즈 텔",
+        "R": "167.67943446975613",
+        "G": "175.63466283836092",
+        "B": "181.7662656189269",
+        "path": "/aHqv7AIgqVnLOr0rj8XqqbxUDbr.jpg"
+    }
+},
+{
+    "model": "movies.palettemovie",
+    "pk": 23,
+    "fields": {
+        "title": "포레스트 검프",
+        "R": "222.03862330329872",
+        "G": "214.9981901852356",
+        "B": "215.27084883406172",
+        "path": "/xdJxoq0dtkchOkUz5UVKuxn7a2V.jpg"
+    }
+},
+{
+    "model": "movies.palettemovie",
+    "pk": 24,
+    "fields": {
+        "title": "시네마 천국",
+        "R": "87.69796086669669",
+        "G": "83.95582962950117",
+        "B": "80.61146220354871",
+        "path": "/r782z4H7GzkyNaf3hAtBB4pVkOj.jpg"
+    }
+},
+{
+    "model": "movies.palettemovie",
+    "pk": 25,
+    "fields": {
+        "title": "7인의 사무라이",
+        "R": "214.1840270106053",
+        "G": "214.1840270106053",
+        "B": "214.1840270106053",
+        "path": "/6Y8Q5t79ybiDA7XubUTneqZhjA3.jpg"
+    }
+},
+{
+    "model": "movies.palettemovie",
+    "pk": 26,
+    "fields": {
+        "title": "조제, 호랑이 그리고 물고기들",
+        "R": "147.61172749999974",
+        "G": "164.29522550000058",
+        "B": "155.67378799999986",
+        "path": "/v60S8rPRCQRYSeCtmLiuRpQqIfC.jpg"
+    }
+},
+{
+    "model": "movies.palettemovie",
+    "pk": 27,
+    "fields": {
+        "title": "좋은 친구들",
+        "R": "50.13042447772651",
+        "G": "41.934343833353985",
+        "B": "47.9329443322085",
+        "path": "/zF9hSBS1t7PVFLo01GrJ3OjGi67.jpg"
+    }
+},
+{
+    "model": "movies.palettemovie",
+    "pk": 28,
+    "fields": {
+        "title": "인생은 아름다워",
+        "R": "213.22903600464574",
+        "G": "204.18998556340728",
+        "B": "195.21039579421165",
+        "path": "/yjOqQsQHdsEZfAosZERqHiwjaty.jpg"
+    }
+},
+{
+    "model": "movies.palettemovie",
+    "pk": 29,
+    "fields": {
+        "title": "어 독스 윌",
+        "R": "115.44230745897399",
+        "G": "108.22325203991868",
+        "B": "90.74452786119461",
+        "path": "/m8eFedsS7vQCZCS8WGp5n1bVD0q.jpg"
+    }
+},
+{
+    "model": "movies.palettemovie",
+    "pk": 30,
+    "fields": {
+        "title": "원스 어폰 어 타임 인 아메리카",
+        "R": "135.99922781880073",
+        "G": "116.70617011704019",
+        "B": "96.48042706237109",
+        "path": "/xbuc6sjIIopkA1Ep24rR6yCw0DK.jpg"
+    }
+},
+{
+    "model": "movies.palettemovie",
+    "pk": 31,
+    "fields": {
+        "title": "하라키리",
+        "R": "52.72108775510199",
+        "G": "44.30124761904762",
+        "B": "45.885023129251685",
+        "path": "/rnYgzVuPaeKnZ85XJlukxmlFcrN.jpg"
+    }
+},
+{
+    "model": "movies.palettemovie",
+    "pk": 32,
+    "fields": {
+        "title": "싸이코",
+        "R": "114.5925706666666",
+        "G": "114.58515733333329",
+        "B": "114.58550933333332",
+        "path": "/vC3P8hH4r3I3fHiRFa1kj6yzeaN.jpg"
+    }
+},
+{
+    "model": "movies.palettemovie",
+    "pk": 33,
+    "fields": {
+        "title": "반딧불이의 묘",
+        "R": "43.5610326666666",
+        "G": "30.02450499999996",
+        "B": "27.425828833333362",
+        "path": "/uN0x0G4uuRjFJIFN57iYihBV2Qh.jpg"
+    }
+},
+{
+    "model": "movies.palettemovie",
+    "pk": 34,
+    "fields": {
+        "title": "뻐꾸기 둥지 위로 날아간 새",
+        "R": "142.1644312169312",
+        "G": "94.27458465608468",
+        "B": "103.43996031746032",
+        "path": "/eH5F8tz5a0EHed7egeKf4XoNvLD.jpg"
+    }
+},
+{
+    "model": "movies.palettemovie",
+    "pk": 35,
+    "fields": {
+        "title": "파이트 클럽",
+        "R": "32.23633612565448",
+        "G": "36.029177486910946",
+        "B": "38.75918830715522",
+        "path": "/uEsdm0noLfmkcVrZlyyuXp9e5I7.jpg"
+    }
+},
+{
+    "model": "movies.palettemovie",
+    "pk": 36,
+    "fields": {
+        "title": "목소리의 형태",
+        "R": "127.86974410090507",
+        "G": "187.0107261967451",
+        "B": "200.7373937410666",
+        "path": "/emNuB1GNGjJqZiK9uVJNiUPbgsx.jpg"
+    }
+},
+{
+    "model": "movies.palettemovie",
+    "pk": 37,
+    "fields": {
+        "title": "스파이더맨: 뉴 유니버스",
+        "R": "146.51860986502854",
+        "G": "120.0846065971726",
+        "B": "99.74814677843798",
+        "path": "/vnWgIIEWAvWKOI65tm6h6VRbyY8.jpg"
+    }
+},
+{
+    "model": "movies.palettemovie",
+    "pk": 38,
+    "fields": {
+        "title": "에반게리온 3.0+1.01",
+        "R": "238.80315376458103",
+        "G": "238.31537044892232",
+        "B": "238.38545987981618",
+        "path": "/eadcE25WY7XlnlhPnE9HuDWeLLj.jpg"
+    }
+},
+{
+    "model": "movies.palettemovie",
+    "pk": 39,
+    "fields": {
+        "title": "시티 오브 갓",
+        "R": "105.17384966666677",
+        "G": "71.46387949999985",
+        "B": "47.59322999999999",
+        "path": "/iKXrQB16sxeXoc6GlnYjeeZKsOW.jpg"
+    }
+},
+{
+    "model": "movies.palettemovie",
+    "pk": 40,
+    "fields": {
+        "title": "소원",
+        "R": "114.7680411900316",
+        "G": "108.83709313243736",
+        "B": "102.4482941612746",
+        "path": "/PZlNvDwKwHeHUsXnd6SEDXWZNn.jpg"
+    }
+},
+{
+    "model": "movies.palettemovie",
+    "pk": 41,
+    "fields": {
+        "title": "하울의 움직이는 성",
+        "R": "105.38148009450722",
+        "G": "134.89161519786106",
+        "B": "121.44684782962636",
+        "path": "/xiz6TiSduvR1U3VLfWVlBEdT9fO.jpg"
+    }
+},
+{
+    "model": "movies.palettemovie",
+    "pk": 42,
+    "fields": {
+        "title": "반딧불이의 숲으로",
+        "R": "165.34970202999793",
+        "G": "170.5985342621499",
+        "B": "135.5124796571967",
+        "path": "/7ZTL7uAfqGygKM2gJGYm36y46NU.jpg"
+    }
+},
+{
+    "model": "movies.palettemovie",
+    "pk": 43,
+    "fields": {
+        "title": "신세기 에반게리온 엔드 오브 에반게리온",
+        "R": "126.65023988961211",
+        "G": "115.69268316149751",
+        "B": "123.83020813899883",
+        "path": "/vIWonMqeYRmY95OEk06NvTC1h8N.jpg"
+    }
+},
+{
+    "model": "movies.palettemovie",
+    "pk": 44,
+    "fields": {
+        "title": "스타워즈 에피소드 5: 제국의 역습",
+        "R": "87.48385208333333",
+        "G": "98.70103055555546",
+        "B": "116.33282847222226",
+        "path": "/icaO5w8uLVm4JxMew71JJrQE2YX.jpg"
+    }
+},
+{
+    "model": "movies.palettemovie",
+    "pk": 45,
+    "fields": {
+        "title": "선셋 대로",
+        "R": "174.36577533333323",
+        "G": "100.1354393333333",
+        "B": "86.28240466666662",
+        "path": "/zt8aQ6ksqK6p1AopC5zVTDS9pKT.jpg"
+    }
+},
+{
+    "model": "movies.palettemovie",
+    "pk": 46,
+    "fields": {
+        "title": "반지의 제왕: 반지 원정대",
+        "R": "118.43199337331446",
+        "G": "101.78142352473354",
+        "B": "65.35695953549006",
+        "path": "/7uCvKNKKLRqYYyHIRpphi3yUE6Z.jpg"
+    }
+},
+{
+    "model": "movies.palettemovie",
+    "pk": 47,
+    "fields": {
+        "title": "울프워커스",
+        "R": "176.48904616666638",
+        "G": "150.63471933333344",
+        "B": "116.78295966666667",
+        "path": "/ehAKuE48okTuonq6TpsNQj8vFTC.jpg"
+    }
+},
+{
+    "model": "movies.palettemovie",
+    "pk": 48,
+    "fields": {
+        "title": "Primal: Tales of Savagery",
+        "R": "132.08784204058153",
+        "G": "97.39820270926877",
+        "B": "84.77619440506925",
+        "path": "/gLVhFIZArwuRCt8tin0KRBLk2Qn.jpg"
+    }
+},
+{
+    "model": "movies.palettemovie",
+    "pk": 49,
+    "fields": {
+        "title": "피아니스트",
+        "R": "58.36194157894729",
+        "G": "76.86589929824578",
+        "B": "88.29682964912271",
+        "path": "/t7L2YDpu635qKT3ehqZxry4yvTX.jpg"
+    }
+},
+{
+    "model": "movies.palettemovie",
+    "pk": 50,
+    "fields": {
+        "title": "위플래쉬",
+        "R": "19.774378251821037",
+        "G": "20.143561827956958",
+        "B": "22.19993496357958",
+        "path": "/fz6osxiG7BWqnLoNgAlekpgSthf.jpg"
+    }
+},
+{
+    "model": "movies.palettemovie",
+    "pk": 51,
+    "fields": {
+        "title": "아메리칸 히스토리 X",
+        "R": "93.33818770226536",
+        "G": "103.59079085760524",
+        "B": "104.02885315533987",
+        "path": "/nm4XkYBt79ZjUQj6Rqxxzl1Wt3c.jpg"
+    }
+},
+{
+    "model": "movies.palettemovie",
+    "pk": 52,
+    "fields": {
+        "title": "인터스텔라",
+        "R": "141.0508169186932",
+        "G": "155.4108526426358",
+        "B": "160.35993562410295",
+        "path": "/zDNAeWU0PxKolEX1D8Vn1qWhGjH.jpg"
+    }
+},
+{
+    "model": "movies.palettemovie",
+    "pk": 53,
+    "fields": {
+        "title": "귀멸의 칼날 극장판 무한열차편",
+        "R": "90.52276568475406",
+        "G": "79.42809625152435",
+        "B": "86.67346171605838",
+        "path": "/m2FNRngyJMyxLatBMJR8pbeG2v.jpg"
+    }
+},
+{
+    "model": "movies.palettemovie",
+    "pk": 54,
+    "fields": {
+        "title": "이창",
+        "R": "56.016143733245706",
+        "G": "60.74811847424538",
+        "B": "62.923978109215625",
+        "path": "/jU5Fe7n9rsEBa0uaV5dqGjJGwmX.jpg"
+    }
+},
+{
+    "model": "movies.palettemovie",
+    "pk": 55,
+    "fields": {
+        "title": "반지의 제왕: 두 개의 탑",
+        "R": "113.6159129614469",
+        "G": "94.42757278921752",
+        "B": "74.01240595403046",
+        "path": "/hjGjAdEPJF2unG8yseu5mcVb5cx.jpg"
+    }
+},
+{
+    "model": "movies.palettemovie",
+    "pk": 56,
+    "fields": {
+        "title": "천국과 지옥",
+        "R": "157.49956906729625",
+        "G": "123.86649744195203",
+        "B": "90.78065623770165",
+        "path": "/cy8N6z9dU9ezamrleoAnRMmmQuy.jpg"
+    }
+},
+{
+    "model": "movies.palettemovie",
+    "pk": 57,
+    "fields": {
+        "title": "시티 라이트",
+        "R": "74.28893562231772",
+        "G": "74.13704434907007",
+        "B": "73.97004291845491",
+        "path": "/7oI6KKZDxEuxhIm5m9VpOF2Yi9N.jpg"
+    }
+},
+{
+    "model": "movies.palettemovie",
+    "pk": 58,
+    "fields": {
+        "title": "이키루",
+        "R": "99.9508533333333",
+        "G": "93.4659653333334",
+        "B": "83.41765866666671",
+        "path": "/uMaLKmpxepW4Uq8lcCpels656u0.jpg"
+    }
+},
+{
+    "model": "movies.palettemovie",
+    "pk": 59,
+    "fields": {
+        "title": "위대한 독재자",
+        "R": "105.06834374514372",
+        "G": "101.6615083139084",
+        "B": "99.03410940170939",
+        "path": "/uw26mSTaA10hg2yuQfNaFLSeY3h.jpg"
+    }
+},
+{
+    "model": "movies.palettemovie",
+    "pk": 60,
+    "fields": {
+        "title": "Dedicada A Mi Ex",
+        "R": "187.54346933333335",
+        "G": "166.93755466666676",
+        "B": "159.46084399999998",
+        "path": "/xc4bTXVwYNXi10jG9dwcaYt5IpU.jpg"
+    }
+}
+]

@@ -1,0 +1,334 @@
+<!-- nowplaying.html-->
+
+{% extends 'base.html' %}
+
+{% block title %}
+<title>PICKA:현재상영작</title>
+{% endblock title %}
+
+{% block content %}
+<!-- Navigation-->
+<nav class="navbar fixed-top navbar-expand-lg" style="margin-top:10px;">
+  <div class="container-fluid">
+    <a href="{% url 'movies:nowplaying' %}">
+      <img src="/static/img/logo_picka.png" href="#page-top" style="width:200px;">
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="margin-left:20px;">
+        <li class="nav-item active" style="margin-left:20px;">
+          <a class="nav-link text-white" href={% url 'movies:nowplaying' %}><b>NOW PLAYING</b></a>
+        </li>
+        <li class="nav-item" style="margin-left:20px;">
+          <a class="nav-link text-white opacity-75" href={% url 'movies:upcoming' %}>UPCOMING</a>
+        </li>
+        <li class="nav-item" style="margin-left:20px;">
+          <a class="nav-link text-white opacity-75" href={% url 'movies:loading' %}>PALETTE</a>
+        </li>
+        <li class="nav-item" style="margin-left:20px;">
+          <a class="nav-link text-white opacity-75" href={% url 'movies:persona' %}>PERSONA</a>
+        </li>
+        <li class="nav-item" style="margin-left:20px;">
+          <a class="nav-link text-white opacity-75" href={% url 'community:index' %}>COMMUNITY</a>
+        </li>
+
+      </ul>
+      <ul class="navbar-nav" style="margin-right:20px;">
+        <li class="nav-item" style="margin-right:20px;">
+          <button class="nav-link btn btn-light opacity-75" style="padding-top:6px; padding-bottom:6px; padding-right:10px; padding-left:10px;">
+            <a class="text-decoration-none text-black fw-bold" href={% url 'accounts:mypage' user.username %}>MYPAGE</a>
+          </button>
+        </li>
+        <li class="nav-item">
+          <form action="{% url 'accounts:logout' %}" method="POST">
+            {% csrf_token %}
+            <input type="submit" value="로그아웃" class="btn btn-outline-light">
+          </form>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!--캐루젤-->
+<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel" data-interval="false">
+  <img src="/static/img/gradient.png" class="d-block h-100" alt="" style="position:absolute; z-index:1;">
+  
+  <div class="carousel-inner d-block h-100">
+    <!--첫번째 캐루젤-->
+    <div class="carousel-item active" style="background-image: url(http://image.tmdb.org/t/p/original/{{ first_movie.backdrop_path }}); height: 100%; background-position: center; background-repeat: no-repeat; background-size: cover;">
+      
+      <!--순위+제목-->
+      <span style="color:white; font-size:200pt; opacity:0.4; position:absolute; top: 40px; left:120pt; z-index:2;"><strong>1</strong></span>
+      {% if fisrt_movie.title|length <= 10 %}
+        <span style="color:white; font-size:80pt; position:absolute; top: 210px; left:150pt; z-index:3"><strong>{{ first_movie.title }}</strong></span>
+      {% else %}
+        <span style="color:white; font-size:50pt; position:absolute; top: 240px; left:150pt; z-index:3"><strong>{{ first_movie.title }}</strong></span>
+      {% endif %}
+      
+      <!--세부정보-->
+      <div class="container" style="position:absolute; top: 380px; left:200px; z-index:3;">        
+        <!--장르, 개봉일, 관객수, 평점-->
+        <div class="row mb-2 text-white" id="firstcarousel">
+          <p>장르: 
+              {% for genre in first_movie_genres %}
+                {{ genre }}
+                {% if not forloop.last %}
+                |
+                {% endif %}
+              {% endfor %}
+          </p>
+          <p>개봉일: {{ first_movie.release_date }}</p>
+          <p>평점: {{ first_movie.vote_average }}</p>
+          <div class="opacity-0" id="myLocationInfo"></div>
+          <div id="myMovieInfo"><span id="movieTitle">{{ first_movie.title }}</span></div>
+        </div>
+        
+        <!--줄거리-->
+        <div class="row mb-3 text-white">          
+          <div class="col-10">{{ first_movie.overview }}</div>
+        </div>
+        
+        <!--유튜브-->
+        <div class="row">
+          <div class="youtube_container">
+          </div>
+          <div class="youtube">
+            <iframe src="" frameborder="0" width="480" height="270"></iframe>
+          </div>
+        </div>        
+      </div>
+    </div>
+
+    <!--나머지 캐루젤-->
+    {% for movie in last_movies %}
+    <div class="carousel-item" style="background-image: url(http://image.tmdb.org/t/p/original/{{ movie.backdrop_path }}); height: 100%; background-position: center; background-repeat: no-repeat; background-size: cover;">
+      
+      <!--순위+제목-->
+      <span style="color:white; font-size:200pt; opacity:0.4; position:absolute; top: 40px; left:120pt; z-index:2;"><strong>{{ forloop.counter|add:1 }}</strong></span>
+      {% if movie.title|length <= 10 %}
+        <span style="color:white; font-size:80pt; position:absolute; top: 210px; left:150pt; z-index:3"><strong>{{ movie.title }}</strong></span>
+      {% else %}
+        <span style="color:white; font-size:50pt; position:absolute; top: 240px; left:150pt; z-index:3"><strong>{{ movie.title }}</strong></span>
+      {% endif %}      
+
+      <!--세부정보-->
+      <div class="container" style="position:absolute; top: 380px; left:200px; z-index:3;">        
+        <!--장르, 개봉일, 관객수, 평점-->
+        <div class="row mb-2 text-white">
+          <p>장르: 
+              {% for genre in movie.genres %}
+                {{ genre }}
+                {% if not forloop.last %}
+                |
+                {% endif %}
+              {% endfor %}
+          </p>
+          <p>개봉일: {{ movie.release_date }}</p>
+          <p>평점: {{ movie.vote_average }}</p>
+          <div id="myLocationInfo"></div>
+          <div id="myMovieInfo"><span id="movieTitle">{{ movie.title }}</span></div>
+        </div>
+        
+        <!--줄거리-->
+        <div class="row mb-3 text-white">          
+          <div class="col-10">{{ movie.overview }}</div>
+        </div>
+        
+        <!--유튜브-->
+        <div class="row">
+          <div class="youtube_container">
+          </div>
+          <div class="youtube">
+            <iframe src="https://www.youtube.com/embed/{{ movie.video_id }}?autoplay=1" frameborder="0" width="480" height="270"></iframe>
+          </div>
+        </div>        
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <!--캐루젤 좌우 이동-->
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+{% endblock content %}
+
+{% block script %}
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey={{KAKAO_API_KEY}}&libraries=services"></script>
+<script>
+  const TMDB_API_KEY = 'abe6369877ac3068367e0a788fb1e760'
+  const base_url = "https://image.tmdb.org/t/p/w300/"
+  const youtubeContainer = document.querySelector(".youtube_container")
+  const youtube = document.querySelector(".youtube")
+  const iframe = youtube.querySelector('iframe')
+  console.log(iframe)
+  
+  //API 서버에서 데이터 가져오는 함수
+  function fetchMovie(page){
+    const url = `https://api.themoviedb.org/3/movie/now_playing?api_key=${TMDB_API_KEY}&region=KR&language=ko`
+    fetch(url)
+    .then(res => res.json())
+    .then(function(res){
+        const movie = res.results[0]
+      
+        const div = document.createElement('div')
+        const output = ''
+        div.innerHTML = output
+        youtubeContainer.appendChild(div);
+        // 영화의 아이디를 div 에 넣어 줌
+        div.setAttribute("data-id", movie.id)
+        const movieId = div.getAttribute('data-id')
+        const movieUrl = `https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=${TMDB_API_KEY}`
+        fetch(movieUrl)
+        .then(res => res.json())
+        .then(function(res){      
+          if(res.results.length > 0){
+            const youtubeId = res.results[0].key
+            //console.log(youtubeId)
+            const youtubeUrl = `https://www.youtube.com/embed/${youtubeId}?autoplay=1`
+            iframe.setAttribute('src', youtubeUrl)
+            //console.log(youtubeUrl)
+            //console.log(iframe)    
+            }
+            console.log(iframe)
+            iframe.setAttribute('src', youtubeUrl)
+          })
+          .catch(error => console.log(error))
+          
+        })
+        .catch(error => console.log(error))
+      };
+ 
+  //윈도우 로드시 기본으로 한번 함수 실행함.
+  window.addEventListener('onLoad', fetchMovie())
+
+
+  // 사용자의 현재 위치 함수
+  function whereami(elt) {
+    const options = {
+      enableHighAccuracy: false,
+      maximumAge: 30000,
+      timeout: 15000
+    }
+    if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(success, error, options)
+    }
+    else {
+    elt.innerHTML = "이 브라우저에서는 Geolocation이 지원되지 않습니다."
+    }
+    function error(e) {
+      elt.innerHTML = "Geolocation 오류 "+e.code +": " + e.message
+    }
+    function success(pos) {
+      console.log(pos)
+    const msg = pos.coords.latitude + "/" + pos.coords.longitude
+    elt.innerHTML = msg
+    }
+    }
+  const elt = document.getElementById("myLocationInfo")
+  whereami(elt)
+
+  // 현재 위치 좌표에서 행정 주소 추출
+  setTimeout(function() {
+    var geocoder = new kakao.maps.services.Geocoder()
+    var callback = function(result, status) {
+        if (status === kakao.maps.services.Status.OK) {
+
+            const tmpArr = result[0].address_name.split(' ')
+            
+            const tmpQueryset = document.querySelectorAll('#myMovieInfo')
+
+            tmpQueryset.forEach((item, index) => {
+              const newBtn = document.createElement('button')
+              const newLink = document.createElement('a')
+              const movieTitle = document.getElementById('movieTitle')
+              
+              newBtn.setAttribute('class', 'btn btn-light opacity-75')
+              newLink.setAttribute('class', 'text-decoration-none text-black')
+              
+              console.log(item.innerText)
+              newLink.href = `https://www.google.com/search?q=${tmpArr[1]}+` + '영화관+' + item.innerText
+              newLink.innerText = '  근처 상영관 보러가기'
+              newLink.style = 'font-weight: bold;'
+              newLink.target = '_blank'
+              item.appendChild(newBtn)
+              newBtn.appendChild(newLink)
+              
+              movieTitle.parentNode.removeChild(movieTitle)
+            })
+
+        }
+    }
+    const info = document.querySelector('#myLocationInfo').innerText.split('/')
+    const child = document.getElementById('myLocationInfo')
+    const parent = document.getElementById('firstcarousel')
+    parent.removeChild(child)
+    const a = geocoder.coord2RegionCode(info[1], info[0], callback)
+    
+  }, 1000)
+
+</script>
+{% endblock script %}
+
+{% block sytle %}
+<style>
+  *{margin:0; padding: 0;}
+
+  h1 {
+    width: 360px; margin: 0 auto; text-align: center;
+    color: blueviolet;
+    padding-top: 20px;
+  }
+  .subsubject {
+    text-align: center;
+  }
+
+  p {
+    padding: 8px 0px;
+  }
+  
+  .youtubeContainer{
+    display: flex;
+    flex-flow: row wrap;
+    justify-items: center;
+    justify-content: center;
+  }
+
+  .youtubeContainer > div{
+    flex-basis:  25%;
+    flex : 0;
+    margin: 8px;
+    border:1px solid rgb(252, 252, 252);
+    padding: 8px;
+    cursor: pointer;
+    box-sizing: border-box;
+  }
+
+  .youtubeContainer > div:hover {
+    border:1px solid rebeccapurple;
+  }
+
+  .youtube{
+    width: 100%;
+    height: 100%;
+  }
+
+  iframe {
+    display: block;
+    width: 100%;
+  }
+
+  .noVideo {
+    color: white;
+  }
+</style>
+{% endblock sytle %}

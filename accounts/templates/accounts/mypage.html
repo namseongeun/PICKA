@@ -1,0 +1,162 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+<title>PICKA:마이페이지</title>
+{% endblock title %}
+
+{% block content %}
+<nav class="navbar fixed-top navbar-expand-lg" style="margin-top:10px;">
+  <div class="container-fluid">
+    <a href="{% url 'movies:nowplaying' %}">
+      <img src="/static/img/logo_picka.png" href="#page-top" style="width:200px;">
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="margin-left:20px;">
+        <li class="nav-item active" style="margin-left:20px;">
+          <a class="nav-link text-white opacity-75" href={% url 'movies:nowplaying' %}>NOW PLAYING</a>
+        </li>
+        <li class="nav-item" style="margin-left:20px;">
+          <a class="nav-link text-white opacity-75" href={% url 'movies:upcoming' %}>UPCOMING</a>
+        </li>
+        <li class="nav-item" style="margin-left:20px;">
+          <a class="nav-link text-white opacity-75" href={% url 'movies:loading' %}>PALETTE</a>
+        </li>
+        <li class="nav-item" style="margin-left:20px;">
+          <a class="nav-link text-white opacity-75" href={% url 'movies:persona' %}>PERSONA</a>
+        </li>
+        <li class="nav-item" style="margin-left:20px;">
+          <a class="nav-link text-white opacity-75" href={% url 'community:index' %}><b>COMMUNITY</b></a>
+        </li>
+
+      </ul>
+      <ul class="navbar-nav" style="margin-right:20px;">
+        <li class="nav-item" style="margin-right:20px;">
+          <button class="nav-link btn btn-light opacity-75" style="padding-top:6px; padding-bottom:6px; padding-right:10px; padding-left:10px;">
+            <a class="text-decoration-none text-black fw-bold" href={% url 'accounts:mypage' user.username %}>MYPAGE</a>
+          </button>
+        </li>
+        <li class="nav-item">
+          <form action="{% url 'accounts:logout' %}" method="POST">
+            {% csrf_token %}
+            <input type="submit" value="로그아웃" class="btn btn-outline-light">
+          </form>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+<!--배경사진-->
+<div class="bg" style="background-image: linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6) ), url('/static/img/mypage_image.jpg'); height: 100%; background-position: center; background-repeat: no-repeat; background-size: cover;">
+  <div class="d-flex justify-content-center">
+    <div class="card bg-white bg-opacity-75" style="width: 70%; margin-top: 5%">
+      <div class="card-body d-flex-row opacity: 0;">
+        <h2 class="card-title text-center fw-bold">{{ person.username }}님의 프로필</h2>
+        <hr>
+        <div>
+          <div class="mt-3">
+            <section class="container col-12">
+              <div class="mt-3">
+                <div>
+                  <h4 class="text-center py-2 fw-bold">작성한 게시글 목록</h4>
+                </div>
+                <table class="table">
+                  <thead class="bg-success text-white">
+                    <tr>
+                      <th scope="col">번호</th>
+                      <th scope="col">영화 제목</th>
+                      <th scope="col">글 제목</th>
+                      <th scope="col">작성시간</th>
+                      <th scope="col">마지막 수정시간</th>
+                    </tr>
+                  </thead>
+                  <tbody class="bg-white bg-opacity-75">
+                  {% for review in person.review_set.all %}
+                    <tr>
+                      <th scope="row">{{ review.pk }}</th>
+                      <td>{{ review.movie_title }}</td>
+                      <td><a href="{% url 'community:detail' review.pk %}">{{ review.title }}</a></td>
+                      <td>{{ review.created_at }}</td>
+                      <td>{{ review.updated_at }}</td>
+                    </tr>
+                  {% endfor %}
+                  </tbody>
+                </table>
+          
+                <hr>
+      
+                <div>
+                  <h4 class="text-center py-2 fw-bold">작성한 댓글 목록</h4>
+                </div>
+                <table class="table">
+                  <thead class="bg-success text-white">
+                    <tr>
+                      <th scope="col">번호</th>
+                      <th scope="col">글 제목</th>
+                      <th scope="col">댓글 내용</th>
+                    </tr>
+                  </thead>
+                  <tbody class="bg-white bg-opacity-75">
+                    {% for comment in person.comment_set.all %}
+                    <tr>
+                      <th scope="row">{{ comment.pk }}</th>
+                      <td><a href="{% url 'community:detail' comment.review.pk %}">{{ comment.review.title }}</a></td>
+                      <td>{{ comment.content }}</td>
+                    </tr>
+                  {% endfor %}
+                  </tbody>
+                </table>
+                <hr>
+              </div>
+            
+              <div>
+                <div>
+                  <h4 class="text-center py-2 fw-bold">계정관리</h4>
+                </div>
+                <div class="container">
+                  <div class="row mb-2">
+                    <a href={% url 'accounts:update' %} class="offset-2 col-8 btn btn-outline-warning fw-bold text-black">회원정보 수정</a>
+                  </div>
+                  <div class="row mb-2">
+                    <a href={% url 'accounts:change_password' %} class="offset-2 col-8 btn btn-outline-warning fw-bold text-black">비밀번호 변경</a>
+                  </div>      
+                  <form action="{% url 'accounts:delete' %}" method="POST" id='delete_form' class="mb-3">
+                    {% csrf_token %}
+                    <div class="row">
+                      <input type="submit" value="회원탈퇴" class="offset-2 col-8 btn btn-danger btn-lg btn-transparent me-4">
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+{% endblock %}
+
+{% block style %}
+<style>
+  body, html {
+    height: 100%;
+    margin:0px;
+  }
+  
+  .carousel,
+  .carousel-item,
+  .carousel-inner {
+    height: 100%;
+    width: 100%;
+  }
+</style>
+{% endblock style %}

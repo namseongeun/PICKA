@@ -1,0 +1,267 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>PICKA:게시글상세</title>
+{% endblock title %}
+
+{% block content %}
+<nav class="navbar fixed-top navbar-expand-lg" style="margin-top:10px;">
+  <div class="container-fluid">
+    <a href="{% url 'movies:nowplaying' %}">
+      <img src="/static/img/logo_picka.png" href="#page-top" style="width:200px;">
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="margin-left:20px;">
+        <li class="nav-item active" style="margin-left:20px;">
+          <a class="nav-link text-white opacity-75" href={% url 'movies:nowplaying' %}>NOW PLAYING</a>
+        </li>
+        <li class="nav-item" style="margin-left:20px;">
+          <a class="nav-link text-white opacity-75" href={% url 'movies:upcoming' %}>UPCOMING</a>
+        </li>
+        <li class="nav-item" style="margin-left:20px;">
+          <a class="nav-link text-white opacity-75" href={% url 'movies:loading' %}>PALETTE</a>
+        </li>
+        <li class="nav-item" style="margin-left:20px;">
+          <a class="nav-link text-white opacity-75" href={% url 'movies:persona' %}>PERSONA</a>
+        </li>
+        <li class="nav-item" style="margin-left:20px;">
+          <a class="nav-link text-white" href={% url 'community:index' %}><b>COMMUNITY</b></a>
+        </li>
+
+      </ul>
+      <ul class="navbar-nav" style="margin-right:20px;">
+        <li class="nav-item" style="margin-right:20px;">
+          <button class="nav-link btn btn-light opacity-75" style="padding-top:6px; padding-bottom:6px; padding-right:10px; padding-left:10px;">
+            <a class="text-decoration-none text-black fw-bold" href={% url 'accounts:mypage' user.username %}>MYPAGE</a>
+          </button>
+        </li>
+        <li class="nav-item">
+          <form action="{% url 'accounts:logout' %}" method="POST">
+            {% csrf_token %}
+            <input type="submit" value="로그아웃" class="btn btn-outline-light">
+          </form>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!--배경사진-->
+<div style="background-image: linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6) ), url('/static/img/intro_image2.jpg');  background-repeat: round; ">
+
+  <!--제목-->
+  <div class="main d-flex justify-content-center">
+    <div class="mt-5">
+      {% comment %} <h1 class="fw-bold text-white mt-5">Movie Community</h1> {% endcomment %}
+    </div>
+  </div>
+
+  <div class="container bg-white bg-opacity-75 border border-success rounded-4" style="margin-top:10%; margin-bottom:10%">
+    <div class="mt-3">
+      <section class="col-12">
+        <div class="bg-success rounded-2">
+            {% if review.pk == 1 %}
+              <h3 class="text-center py-2 text-white">1st Review</h3>
+            {% elif review.pk == 2 %}
+              <h3 class="text-center py-2 text-white">2nd Review</h3>
+            {% else %}
+              <h3 class="text-center py-2 text-white">{{ review.pk }}th Review</h3>
+            {% endif %}
+        </div>
+        <hr>
+
+        <div>
+          <!--작성내용-->
+          <div class="container">
+            <div class="row mb-3 d-flex align-items-center">
+              <div class="col-2">
+                <h5 class="fw-bold"> Review Title </h5>
+              </div>
+              <div class="col-10 border rounded bg-white bg-opacity-75"> 
+                <h5> {{ review.title }} </h5> 
+              </div>
+            </div>
+
+            <div class="row mb-3 d-flex align-items-center">
+              <div class="col-2">
+                <h5 class="fw-bold"> Movie Title </h5>
+              </div>
+              <div class="col-10 border rounded bg-white bg-opacity-75"> 
+                <h5> {{ review.movie_title }} </h5> 
+              </div>
+            </div>
+
+            <div class="row mb-3 d-flex align-items-center">
+              <div class="col-2">
+                <h5 class="fw-bold"> Rank </h5>
+              </div>
+              <div class="col-10 border rounded bg-white bg-opacity-75"> 
+                <h5> {{ review.rank }} </h5> 
+              </div>
+            </div>
+
+            <div class="row mb-2">
+              <div class="col-2">
+                <h5 class="fw-bold"> Review Content </h5>
+              </div>
+              <div class="col-10 border rounded bg-white bg-opacity-75" style="height: 200px"> 
+                <h5> {{ review.content }} </h5> 
+              </div>
+            </div>
+
+            <br>
+            
+            <!--추가정보-->
+            <div class="row">
+              <div class="col-5">
+                {% if user != review.user %}
+                <form class="d-inline" data-review-pk={{review.pk}}>
+                  {% csrf_token %}
+                  {% if user in review.like_users.all %}
+                    <button class="btn mb-2 btn-danger" id="likeBtn">좋아요 취소</button>
+                  {% else %}
+                    <button class="btn mb-2 btn-success" id="likeBtn">좋아요</button>
+                  {% endif %}
+                </form>
+                {% endif %}
+                <p class="fw-bold" id="likeStatus">{{ review.like_users.all|length }} 명이 이 글을 좋아합니다.</p>
+              </div>
+              <div class="offset-2 col-5">
+                <p class="fw-bold">|  작성자: {{ review.user }}</p>
+                <p class="fw-bold">|  작성 시각: {{ review.created_at }}</p>
+                <p class="fw-bold">|  수정 시각: {{ review.updated_at }}</p>
+              </div>
+            </div>
+            
+          </div>
+
+          <!--댓글창-->
+          <div class="container">
+            <hr>
+            {% if comments|length %}
+              <h4 class="fw-bold">댓글 {{ comments|length }}개</h4>
+            {% else %}
+              <h4 class="fw-bold">댓글이 없습니다</h4>
+            {% endif %}
+            
+            <div>
+              <table class="table">
+                <thead class="bg-success text-white">
+                  <tr>
+                    <th scope="col">Comment</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Created</th>
+                    <th scope="col">Updated</th>
+                    <th scope="col"></th>
+
+                  </tr>
+                </thead>
+                <tbody class="bg-white bg-opacity-75">
+                  {% for comment in comments %}
+                    <tr>
+                      <td>{{ comment.content }}</td>
+                      <td>{{ comment.user }}</td>
+                      <td>{{ comment.created_at }}</td>
+                      <td>{{ comment.updated_at }}</td>
+                      <td>
+                        {% if request.user == comment.user %}
+                          <form action="{% url 'community:delete_comment' review.pk comment.pk %}" method="POST">
+                            {% csrf_token %}
+                            <input type="submit" class="btn btn-danger" value="댓글삭제">
+                          </form>
+                        {% endif %}
+                      </td>
+                    </tr>
+                  {% empty %}
+                    <p><b>댓글을 남겨주세요 </b></p>
+                  {% endfor %}
+                </tbody>
+              </table>  
+            </div>              
+          </div>
+          <hr>
+
+          {% if request.user.is_authenticated %}
+            <form action="{% url 'community:create_comment' review.pk %}" method="POST">
+              <div class="d-flex-row">
+                {% csrf_token %}
+                <div class="container">
+                  <div class="row">
+                    <div class="col-11">
+                      <input type="text" name="content" placeholder="댓글내용" class="form-control">
+                    </div>
+                    <div class="col-1">
+                      <input class="btn btn-outline-success text-black fw-bold" type="submit" value="댓글달기">
+                    </div>              
+                  </div>                
+              </div>
+            </form>
+          {% endif %}
+          <hr>
+
+          <div class="d-flex justify-content-end">
+            {% if request.user == review.user %}
+            <form action="{% url 'community:delete' review.pk %}" method="POST">
+              {% csrf_token %}
+              <input class="btn btn-danger btn-lg mx-2 mb-2 fw-bold" type="submit" value="게시글 삭제">
+            </form>
+              <a class="btn btn-warning btn-lg mx-2 mb-2 fw-bold" href="{% url 'community:update' review.pk %}">게시글 수정</a>
+            {% endif %}
+            <a class="btn btn-warning btn-lg mx-2 mb-2 fw-bold" href={% url 'community:index' %}>게시글 목록</a>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+{% endblock content %}
+
+
+{% block script %}
+<script>
+  const likeForm = document.querySelector('.d-inline')
+  const reviewPk = likeForm.dataset.reviewPk
+  const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
+  const likeBtn = document.querySelector('#likeBtn')
+  const likeStatus = document.querySelector('#likeStatus')
+
+  likeForm.addEventListener('submit', onSubmit2)
+  function onSubmit2(event) {
+    event.preventDefault()
+
+    axios({
+      method: 'post',
+      url: `http://127.0.0.1:8000/community/${reviewPk}/like/`,
+      headers: {'X-CSRFToken': csrftoken},
+    })
+      .then(function (response) {
+        console.log(response.data)
+        const is_liked = response.data.is_liked
+        const likes = response.data.likes
+
+        if (is_liked) {
+          likeBtn.innerText = '좋아요 취소'
+        } else {
+          likeBtn.innerText = '좋아요'
+        }
+
+        likeStatus.innerText = `${likes} 명이 이 글을 좋아합니다.`
+      })
+  }
+  
+</script>
+{% endblock script %}
+
+
+{% block style %}
+<style>
+  body, html {
+    background-color: black;
+    margin:0px;
+  }
+
+</style>
+{% endblock style %}

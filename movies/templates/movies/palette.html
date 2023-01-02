@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+  <title>PICKA:팔레트</title>
+  {% load static %}
+    <link rel="stylesheet" href="{% static "/css/style.css" %}">
+</head>
+
+
+<body>
+  <!-- Navigation-->
+  <nav class="navbar fixed-top navbar-expand-lg" style="margin-top:10px;">
+    <div class="container-fluid">
+      <a href="{% url 'movies:nowplaying' %}">
+        <img src="/static/img/logo_picka.png" href="#page-top" style="width:200px;">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="margin-left:20px;">
+          <li class="nav-item" style="margin-left:20px;">
+            <a class="nav-link text-white opacity-75" href={% url 'movies:nowplaying' %}>NOW PLAYING</a>
+          </li>
+          <li class="nav-item" style="margin-left:20px;">
+            <a class="nav-link text-white opacity-75" href={% url 'movies:upcoming' %}>UPCOMING</a>
+          </li>
+          <li class="nav-item active" style="margin-left:20px;">
+            <a class="nav-link text-white" href={% url 'movies:loading' %}><b>PALETTE</b></a>
+          </li>
+          <li class="nav-item" style="margin-left:20px;">
+            <a class="nav-link text-white opacity-75" href={% url 'movies:persona' %}>PERSONA</a>
+          </li>
+          <li class="nav-item" style="margin-left:20px;">
+            <a class="nav-link text-white opacity-75" href={% url 'community:index' %}>COMMUNITY</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav" style="margin-right:20px;">
+          <li class="nav-item" style="margin-right:20px;">
+            <button class="nav-link btn btn-light opacity-75" style="padding-top:6px; padding-bottom:6px; padding-right:10px; padding-left:10px;">
+              <a class="text-decoration-none text-black fw-bold" href={% url 'accounts:mypage' user.username %}>MYPAGE</a>
+            </button>
+          </li>
+          <li class="nav-item">
+            <form action="{% url 'accounts:logout' %}" method="POST">
+              {% csrf_token %}
+              <input type="submit" value="로그아웃" class="btn btn-outline-light">
+            </form>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  
+  
+  <!-- 본 페이지-->
+  <div class="backimage">
+    <div class="container">
+      <div class="row">
+        <div class="thumbnail">
+          <div style="margin-top:100px;">
+            <div class="preview" style="border:0 margin:0px;"></div>
+            <img src="/static/img/palette_image2.png" alt="" id="backgroundImage" style="border:0;">
+          </div>
+        </div>
+      </div>
+    
+      <div class="result">
+        <span class="opacity-0" id="targetRGB">RGB: rgb(200,200,200)</span>
+      </div>
+        
+      <canvas id="cs"></canvas>
+   
+      <!-- Button trigger modal -->
+      <div class="row mt-5">
+        <div class="d-flex justify-content-center">
+          <button type="button" class="btn btn-outline-light text-white" data-bs-toggle="modal" data-bs-target="#exampleModal" id="modalbtn">
+            <div class="shadow-sm">
+            나만의 무비 컬러 확인하기 
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <!-- Modal -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg mt-5">
+          <div class="modal-content">
+            <div class="modal-header">
+              <div class="d-flex justify-content-center">
+                <h5 class="modal-title" id="exampleModalLabel">나만의 무비 컬러</h5>
+              </div>    
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            <div class="row row-cols-1 row-cols-md-3 g-4" id="cards">
+              <!-- 새로 반환되는 영화 리스트 -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <canvas id="myCanvas"></canvas>
+  </div>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+{% block script %}
+  <script>
+
+    // 데이터 불러오기
+    const movieArr = [
+      {% for movie in movies %}
+        {
+          title: '{{ movie.title }}',
+          R: Number('{{ movie.R }}'),
+          G: Number('{{ movie.G }}'),
+          B: Number('{{ movie.B }}'),
+          path: '{{ movie.path }}'
+        },
+      {% endfor%}
+    ]
+    console.log(movieArr)
+
+    const img = document.querySelector('.thumbnail img')
+    const canvas = document.querySelector('#cs')
+    const result = document.querySelector('.result')
+    const preview = document.querySelector('.preview')
+    let x = ''
+    let y = ''
+
+    img.addEventListener('click', function(event) { // 이미지 클릭 시 해당 RGB 값이 버튼에 반영
+      if (event.offsetX) {
+        x = event.offsetX
+        y = event.offsetY 
+      } else if (event.layerX) {
+        x = event.layerX
+        y = event.layerY
+      }
+      useCanvas(canvas, img, function() {
+        const p = canvas.getContext('2d').getImageData(x, y, 1, 1).data
+        result.innerHTML = '<span class="opacity-0" id="targetRGB">RGB:  rgb('+ p[0] + ',' + p[1] + ',' + p[2] + ')</span>'
+        const button = document.querySelector('#modalbtn')
+        button.style.background = rgbToHex(p[0],p[1],p[2])
+
+      })
+    }, false)
+
+    img.addEventListener('mousemove', function(event) { // 마우스 이동 시 해당 RGB 값이 프리뷰에 실시간 반영
+      if (event.offsetX) {
+        x = event.offsetX
+        y = event.offsetY 
+      } else if (event.layerX) {
+        x = event.layerX
+        y = event.layerY
+      }
+      useCanvas(canvas, img, function() {
+        const p = canvas.getContext('2d').getImageData(x, y, 1, 1).data
+        preview.style.background = rgbToHex(p[0],p[1],p[2])
+      })
+    }, false)
+    
+    function useCanvas(el, image, callback) {
+      el.width = image.width
+      el.height = image.height
+      el.getContext('2d').drawImage(image, 0, 0, image.width, image.height)
+      return callback()
+    }
+
+    function componentToHex(c) {
+      const hex = c.toString(16)
+      return hex.length == 1? '0' + hex : hex
+    }
+
+    function rgbToHex(r, g, b) {
+      return '#' + componentToHex(r) + componentToHex(g) + componentToHex(b)
+    }
+
+    function getAverageRGB(image) { // RGB 평균 구하는 함수
+      let blockSize = 5
+      const defaultRGB = {r:0,g:0,b:0}
+      const canvas = document.createElement('canvas')
+      const context = canvas.getContext && canvas.getContext('2d')
+      let i = -4
+      let rgb = {r:0,g:0,b:0}
+      let count = 0
+      
+      if (!context) {
+        return defaultRGB
+      }
+      height = canvas.height = image.naturalHeight || image.offsetHeight || image.height
+      width = canvas.width = image.naturalWidth || image.offsetWidth || image.width
+      context.drawImage(image, 0, 0)
+      console.log(context)
+      try {
+        data = context.getImageData(0, 0, width, height)
+    } catch(e) {
+        // security error, img on diff domain */alert('x');
+        // return defaultRGB;
+    }
+    
+    length = data.data.length
+    while ( (i += blockSize * 4) < length ) {
+      ++count
+      rgb.r += data.data[i]
+      rgb.g += data.data[i+1]
+      rgb.b += data.data[i+2]
+    }
+    
+    rgb.r = ~~(rgb.r/count)
+    rgb.g = ~~(rgb.g/count)
+    rgb.b = ~~(rgb.b/count)
+    return rgb
+    }
+  
+    // 추천 알고리즘
+    
+    const btn = document.querySelector('#modalbtn')
+    
+    btn.addEventListener('click', function(event) {
+    
+      let targetRGB = document.querySelector('#targetRGB').innerText
+      targetRGB = targetRGB.slice(9, -1)
+      let targetRGBArray = targetRGB.split(',')
+      
+      let recommendArray = []
+      const pickAlgorithm = movieArr.forEach(function(item, index) {
+        let pickTitle = {title: item['title']}
+        let pickRGB = {value: (item['R'] - targetRGBArray[0])**2 + (item['G'] - targetRGBArray[1])**2 + (item['B'] - targetRGBArray[2])**2}
+        let pickPath = {src: `https://www.themoviedb.org/t/p/original/${item['path']}`}
+        let recommendObject = Object.assign(pickTitle, pickRGB, pickPath)
+        let count = recommendArray.push(recommendObject)
+      })
+         
+      let finalArr = recommendArray.sort(function(a, b) {
+        return a.value - b.value
+      })
+    
+      finalArr = finalArr.slice(0, 3)   
+      
+      const imageSwitch = finalArr.forEach(function(item, index) {
+    
+        const cardsDiv = document.querySelector('#cards')
+        const figureTag = document.createElement('figure')
+        const aTag = document.createElement('a')
+        const imgTag = document.createElement('img')
+        const figcaptionTag = document.createElement('figcaption')
+    
+        figureTag.className = 'figure'
+        figureTag.id = 'tmp'
+        aTag.href = `https://movie.naver.com/movie/search/result.naver?query=${item.title}`
+        aTag.target = '_blank'
+        imgTag.src = item.src
+        imgTag.style = 'height:90%;'
+        imgTag.className = 'figure-img img-fluid rounded'
+        aTag.setAttribute('style', 'text-decoration: none;')
+        aTag.setAttribute('class', 'text-dark')
+
+    
+        cardsDiv.appendChild(figureTag)
+        figureTag.appendChild(aTag)
+        aTag.appendChild(imgTag)
+        aTag.appendChild(figcaptionTag)
+        figcaptionTag.innerText = item.title
+        figcaptionTag.setAttribute('class', 'text-center')
+
+      })
+    
+    
+    
+    let myModalEl = document.querySelector('#exampleModal')
+    myModalEl.addEventListener('hidden.bs.modal', function (event) {
+        try {
+          const deleteDivs = recommendArray.forEach(function(item, index) {
+            let tmpTag = document.querySelector('#tmp')
+            tmpTag.parentNode.removeChild(tmpTag)
+          })
+        } catch {
+          console.log('You clicked the screen')
+        }
+      }); 
+    })
+    
+  </script>
+{% endblock script %}
+</body>
+</html>
